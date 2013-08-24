@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1377380331 source:c:\codeblocks\projeto cci\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+
