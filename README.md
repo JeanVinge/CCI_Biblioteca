@@ -1,14 +1,17 @@
 O projeto deve ser elaborado usando os conceitos de lista ligada. 
 Consiste no cadastramento e manipulação de LIVROS de uma BIBLIOTECA. 
 Os dados de cada livro são: 
+
   Titulo; 
   Assunto; 
   Autor; 
   Número de registro; 
+
 O número de registro de conter três dígitos 100 – 999, ser gerado aleatoriamente e não pode 
 haver números de registros repetidos. 
 Os livros devem ser armazenados em ORDEM CRESCENTE DE NÚMERO DE REGISTRO. 
 A implementação deve conter as seguintes funções: 
+
 •  _ Inclusão de novos livros; 
 •  _ Remoção de livros; 
 •  _ Alteração de informações; 
