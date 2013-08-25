@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="main.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="main.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-<<<<<<< HEAD
-			<Cursor1 position="0" topLine="185" />
-=======
-			<Cursor1 position="3273" topLine="97" />
->>>>>>> 03fb38d4a466439bfbd631fcb39c7f66cc878c84
+			<Cursor1 position="0" topLine="194" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

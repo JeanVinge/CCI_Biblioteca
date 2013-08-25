@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include<ctype.h>
 
 struct livros
 {
@@ -16,6 +15,9 @@ struct livros *principal=NULL;
 void listar()
 {
     system("cls");
+    printf("*====================================\n");
+    printf("*Relatorio de livros adicionados\n");
+    printf("*====================================\n\n");
     struct livros *percorre;
     percorre=principal;
     while (percorre!=NULL)
@@ -28,6 +30,8 @@ void listar()
         printf("=====================================\n\n");
         percorre=percorre->proximo;
     }
+    system("pause");
+    printf("Aperte enter para sair.......\n\n");
     return;
 }
 
@@ -41,8 +45,10 @@ void buscar()
     printf("Digite o titulo do livro a ser procurado: ");
     scanf("%s",tituloLivro);
 
-    while (percorre!=NULL) {
-        if (strcmp(percorre->titulo, tituloLivro) ==0) {
+    while (percorre!=NULL)
+    {
+        if (strcmp(percorre->titulo, tituloLivro) ==0)
+        {
             printf("=====================================\n");
             printf("Numero do Registro: %d\n",percorre->numRegistro);
             printf("Titulo: %s\n",percorre->titulo);
@@ -51,11 +57,14 @@ void buscar()
             printf("=====================================\n\n");
             check++;
             percorre=NULL;
-        } else {
+        }
+        else
+        {
             percorre=percorre->proximo;
         }
     }
-    if (check==0) {
+    if (check==0)
+    {
         printf("\nO Livro %s não foi encontrado.\n", tituloLivro);
     }
     return;
@@ -70,18 +79,20 @@ void inserir()
     /*printf("Digite o Numero do registro :");
     scanf("%d",&novo->numRegistro);*/
     novo->numRegistro = rand() % 999;
-    printf("Digite o titulo :");
+    printf("Digite o titulo : ");
     scanf("%s",novo->titulo);
-    printf("Digite o Autor :");
+    printf("Digite o Autor : ");
     scanf("%s",novo->autor);
-    printf("Digite o Assunto :");
+    printf("Digite o Assunto : ");
     scanf("%s",novo->assunto);
     printf("\n\n");
     novo->proximo=NULL;
 
     //Inserção do primeiro nó na lista
     if(principal==NULL)
+    {
         principal=novo;
+    }
     else
     {
         percorre=principal;
@@ -92,48 +103,99 @@ void inserir()
     return;
 }
 
-void remover()
+void retira ()
 {
-    struct livros *percorre, *remove;
-    char titulo[50];
-    percorre=principal;
+    system("cls");
 
-    if (percorre==NULL)
-        return;
+    struct livros *anterior = NULL;
+    char nome_livro[30];
+    struct livros *ponteiro_lista;
+    ponteiro_lista = principal;
 
-    printf("Digite o titulo a remover: ");
-    scanf("%s",titulo);
+    if(ponteiro_lista == NULL)
+    {
+        printf("Lista vazia, insira um elemento para remover alguma coisa");
+        return 0;
+    }
 
-    if (percorre->proximo==NULL)
+    printf("Insira o titulo do livro a ser removido :");
+    scanf("%s",nome_livro);
+
+    while (ponteiro_lista != NULL && (strcmp(ponteiro_lista->titulo, nome_livro) != 0) )
     {
-        if (strcmp(percorre->titulo,titulo)==0)
-        {
-            principal=NULL;
-            free(percorre);
-            return;
-        }
+        anterior = ponteiro_lista;
+        ponteiro_lista = ponteiro_lista->proximo;
     }
-    if (strcmp(percorre->titulo,titulo)==0)
+
+    if (ponteiro_lista == NULL)
     {
-        principal=percorre->proximo;
-        free(percorre);
-        return;
+        printf("não achou nada");
     }
-    remove=percorre->proximo;
-    while(strcmp(remove->titulo,titulo)!=0)
+    if (anterior == NULL)  //primeiro elemento da lista
     {
-        percorre=remove;
-        remove=percorre->proximo;
-        if(remove==NULL)
-        {
-            printf("Não encontrado\n");
-            return;
-        }
+        ponteiro_lista = ponteiro_lista->proximo;
+        principal = ponteiro_lista;//gambiarra para funfar
     }
-    percorre->proximo=remove->proximo;
-    free(remove);
-    return;
+    else
+    {
+        anterior->proximo = ponteiro_lista->proximo;//faz o anterior apontar para o proximo elemento do que foi removido
+        free(ponteiro_lista);
+    }
+    return 0;
+
 }
+
+void mudarCor()
+{
+    int op=0;
+    while (op != 7)
+    {
+        system("cls");
+        printf("*===================================*\n");
+        printf("*Escolha a cor da letra/Fundo de tela\n");
+        printf("*===================================*\n\n");
+        printf("* \t1 - Cinza/Azul.\n");
+        printf("* \t2 - Azul/Verde Agua.\n");
+        printf("* \t3 - Marrom/Azul.\n");
+        printf("* \t4 - Cinza/Vermelho.\n");
+        printf("* \t5 - Azul/Lilas.\n");
+        printf("* \t6 - Verde/Mostarda.\n");
+        printf("* \t7 - Sair.\n\n");
+        printf("*===================================*\n");
+        printf("\n\nEscolha uma opcao: ");
+        scanf("%d",&op);
+        printf("\n\n");
+        switch (op)
+        {
+        case 1:
+            system("COLOR 17");
+            break;
+        case 2:
+            system("COLOR 39");
+            break;
+        case 3:
+            system("COLOR 34");
+            break;
+        case 4:
+            system("COLOR 47");
+            break;
+        case 5:
+            system("COLOR 53");
+            break;
+        case 6:
+            system("COLOR 62");
+            break;
+        case 7:
+            break;
+        default :
+            system("cls");
+            printf("\n[ERRO] - Opcao Invalida.\n\n");
+            break;
+        }
+    }
+       return 0;
+}
+
 
 int main()
 {
@@ -141,20 +203,22 @@ int main()
     printf("Digite um numero para gerar a sequencia randomica: ");
     scanf("%d",&semente);
     srand(semente);
-    system("cls");
-    while (opcao !=4)
+    while (opcao != 7)
     {
+        system("cls");
         printf("*===================================*\n");
         printf("*Trabalho de CCI - Biblioteca 09/2013\n");
         printf("*===================================*\n\n");
-        printf("* 1 - Inserir Livro.\n");
-        printf("* 2 - Listar Livros.\n");
-        printf("* 3 - Buscar Livro.\n");
-        printf("* 4 - Remover Livro.\n");
-        printf("* 5 - Sair.\n\n");
+        printf("* \t1 - Inserir Livro.\n");
+        printf("* \t2 - Listar Livros.\n");
+        printf("* \t3 - Buscar Livro.\n");
+        printf("* \t4 - Remover Livro.\n");
+        printf("* \t6 - Mudar cor.\n");
+        printf("* \t7 - Sair.\n\n");
         printf("*===================================*\n");
         printf("\n\nEscolha uma opcao: ");
         scanf("%d",&opcao);
+        printf("\n\n");
         switch (opcao)
         {
         case 1:
@@ -167,9 +231,14 @@ int main()
             buscar();
             break;
         case 4:
-            remover();
+            retira();
             break;
         case 5:
+            break;
+        case 6:
+            mudarCor();
+            break;
+        case 7:
             break;
         default :
             system("cls");
