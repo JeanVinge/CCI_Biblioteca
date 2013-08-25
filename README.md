@@ -1,5 +1,5 @@
 O projeto deve ser elaborado usando os conceitos de lista ligada. 
-Consiste no cadastramento e manipulação de LIVROS de uma BIBLIOTECA. 
+Consiste no cadastramento e manipulação de livros de uma BIBLIOTECA. 
 Os dados de cada livro são: 
 
   Titulo; 
