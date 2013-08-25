@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # depslib dependency file v1.0
 1377380331 source:c:\codeblocks\projeto cci\main.c
 	<stdio.h>
@@ -17,3 +18,24 @@
 	<string.h>
 	<ctype.h>
 
+=======
+# depslib dependency file v1.0
+1377380331 source:c:\codeblocks\projeto cci\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+
+1377398846 source:c:\users\untaken\documents\github\cci_biblioteca\projeto cci\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+
+1377466102 source:e:\cci_biblioteca\projeto cci\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+
+>>>>>>> 03fb38d4a466439bfbd631fcb39c7f66cc878c84

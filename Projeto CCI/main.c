@@ -81,7 +81,11 @@ void inserir()
 
     //Inserção do primeiro nó na lista
     if(principal==NULL){
+<<<<<<< HEAD
         principal=novo;
+=======
+        principal=novo;
+>>>>>>> 03fb38d4a466439bfbd631fcb39c7f66cc878c84
     } else {
         percorre=principal;
         while(percorre->proximo!=NULL)
@@ -92,6 +96,7 @@ void inserir()
 }
 
 void retira () {
+<<<<<<< HEAD
     system("cls");
 
     struct livros *anterior = NULL;
@@ -178,6 +183,43 @@ void mudarCor()
 }
 
 
+=======
+    system("cls");
+
+    struct livros *anterior = NULL;
+    char nome_livro[30];
+    struct livros *ponteiro_lista;
+    ponteiro_lista = principal;
+
+    if(ponteiro_lista == NULL) {
+        printf("Lista vazia, insira um elemento para remover alguma coisa");
+        return 0;
+    }
+
+    printf("Insira o titulo do livro a ser removido :");
+    scanf("%s",nome_livro);
+
+    while (ponteiro_lista != NULL && (strcmp(ponteiro_lista->titulo, nome_livro) != 0) ) {
+        anterior = ponteiro_lista;
+        ponteiro_lista = ponteiro_lista->proximo;
+    }
+
+    if (ponteiro_lista == NULL) {
+        printf("não achou nada");
+    }
+    if (anterior == NULL) {//primeiro elemento da lista
+        ponteiro_lista = ponteiro_lista->proximo;
+        principal = ponteiro_lista;//gambiarra para funfar
+    } else {
+        anterior->proximo = ponteiro_lista->proximo;//faz o anterior apontar para o proximo elemento do que foi removido
+        free(ponteiro_lista);
+    }
+    return 0;
+
+}
+
+
+>>>>>>> 03fb38d4a466439bfbd631fcb39c7f66cc878c84
 
 int main()
 {
