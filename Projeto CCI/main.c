@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
+#include<ctype.h>
 
 struct livros
 {
@@ -80,13 +80,10 @@ void inserir()
     novo->proximo=NULL;
 
     //Inserção do primeiro nó na lista
-    if(principal==NULL){
-<<<<<<< HEAD
+    if(principal==NULL)
         principal=novo;
-=======
-        principal=novo;
->>>>>>> 03fb38d4a466439bfbd631fcb39c7f66cc878c84
-    } else {
+    else
+    {
         percorre=principal;
         while(percorre->proximo!=NULL)
             percorre=percorre->proximo;
@@ -95,131 +92,48 @@ void inserir()
     return;
 }
 
-void retira () {
-<<<<<<< HEAD
-    system("cls");
-
-    struct livros *anterior = NULL;
-    char nome_livro[30];
-    struct livros *ponteiro_lista;
-    ponteiro_lista = principal;
-
-    if(ponteiro_lista == NULL) {
-        printf("Lista vazia, insira um elemento para remover alguma coisa");
-        return 0;
-    }
-
-    printf("Insira o titulo do livro a ser removido :");
-    scanf("%s",nome_livro);
-
-    while (ponteiro_lista != NULL && (strcmp(ponteiro_lista->titulo, nome_livro) != 0) ) {
-        anterior = ponteiro_lista;
-        ponteiro_lista = ponteiro_lista->proximo;
-    }
-
-    if (ponteiro_lista == NULL) {
-        printf("não achou nada");
-    }
-    if (anterior == NULL) {//primeiro elemento da lista
-        ponteiro_lista = ponteiro_lista->proximo;
-        principal = ponteiro_lista;//gambiarra para funfar
-    } else {
-        anterior->proximo = ponteiro_lista->proximo;//faz o anterior apontar para o proximo elemento do que foi removido
-        free(ponteiro_lista);
-    }
-    return 0;
-
-}
-
-void mudarCor()
+void remover()
 {
-    system("cls");
-    int op=0;
-    while (op != 7)
+    struct livros *percorre, *remove;
+    char titulo[50];
+    percorre=principal;
+
+    if (percorre==NULL)
+        return;
+
+    printf("Digite o titulo a remover: ");
+    scanf("%s",titulo);
+
+    if (percorre->proximo==NULL)
     {
-        printf("*===================================*\n");
-        printf("*Escolha a cor da letra/Fundo de tela\n");
-        printf("*===================================*\n\n");
-        printf("* \t1 - Cinza/Azul.\n");
-        printf("* \t2 - Azul/Verde Agua.\n");
-        printf("* \t3 - Marrom/Azul.\n");
-        printf("* \t4 - Cinza/Vermelho.\n");
-        printf("* \t5 - Azul/Lilas.\n");
-        printf("* \t6 - Verde/Mostarda.\n");
-        printf("* \t7 - Sair.\n\n");
-        printf("*===================================*\n");
-        printf("\n\nEscolha uma opcao: ");
-        scanf("%d",&op);
-        printf("\n\n");
-        switch (op)
+        if (strcmp(percorre->titulo,titulo)==0)
         {
-        case 1:
-            system("COLOR 17");
-            break;
-        case 2:
-            system("COLOR 39");
-            break;
-        case 3:
-            system("COLOR 34");
-            break;
-        case 4:
-            system("COLOR 47");
-            break;
-        case 5:
-            system("COLOR 53");
-            break;
-        case 6:
-            system("COLOR 62");
-            break;
-        case 7:
-            break;
-        default :
-            system("cls");
-            printf("\n[ERRO] - Opcao Invalida.\n\n");
-            break;
+            principal=NULL;
+            free(percorre);
+            return;
         }
     }
-       return 0;
+    if (strcmp(percorre->titulo,titulo)==0)
+    {
+        principal=percorre->proximo;
+        free(percorre);
+        return;
+    }
+    remove=percorre->proximo;
+    while(strcmp(remove->titulo,titulo)!=0)
+    {
+        percorre=remove;
+        remove=percorre->proximo;
+        if(remove==NULL)
+        {
+            printf("Não encontrado\n");
+            return;
+        }
+    }
+    percorre->proximo=remove->proximo;
+    free(remove);
+    return;
 }
-
-
-=======
-    system("cls");
-
-    struct livros *anterior = NULL;
-    char nome_livro[30];
-    struct livros *ponteiro_lista;
-    ponteiro_lista = principal;
-
-    if(ponteiro_lista == NULL) {
-        printf("Lista vazia, insira um elemento para remover alguma coisa");
-        return 0;
-    }
-
-    printf("Insira o titulo do livro a ser removido :");
-    scanf("%s",nome_livro);
-
-    while (ponteiro_lista != NULL && (strcmp(ponteiro_lista->titulo, nome_livro) != 0) ) {
-        anterior = ponteiro_lista;
-        ponteiro_lista = ponteiro_lista->proximo;
-    }
-
-    if (ponteiro_lista == NULL) {
-        printf("não achou nada");
-    }
-    if (anterior == NULL) {//primeiro elemento da lista
-        ponteiro_lista = ponteiro_lista->proximo;
-        principal = ponteiro_lista;//gambiarra para funfar
-    } else {
-        anterior->proximo = ponteiro_lista->proximo;//faz o anterior apontar para o proximo elemento do que foi removido
-        free(ponteiro_lista);
-    }
-    return 0;
-
-}
-
-
->>>>>>> 03fb38d4a466439bfbd631fcb39c7f66cc878c84
 
 int main()
 {
@@ -228,21 +142,19 @@ int main()
     scanf("%d",&semente);
     srand(semente);
     system("cls");
-    while (opcao != 5)
+    while (opcao !=4)
     {
         printf("*===================================*\n");
         printf("*Trabalho de CCI - Biblioteca 09/2013\n");
         printf("*===================================*\n\n");
-        printf("* \t1 - Inserir Livro.\n");
-        printf("* \t2 - Listar Livros.\n");
-        printf("* \t3 - Buscar Livro.\n");
-        printf("* \t4 - Remover Livro.\n");
-        printf("* \t6 - Mudar cor.\n");
-        printf("* \t7 - Sair.\n\n");
+        printf("* 1 - Inserir Livro.\n");
+        printf("* 2 - Listar Livros.\n");
+        printf("* 3 - Buscar Livro.\n");
+        printf("* 4 - Remover Livro.\n");
+        printf("* 5 - Sair.\n\n");
         printf("*===================================*\n");
         printf("\n\nEscolha uma opcao: ");
         scanf("%d",&opcao);
-        printf("\n\n");
         switch (opcao)
         {
         case 1:
@@ -255,12 +167,9 @@ int main()
             buscar();
             break;
         case 4:
-            retira();
+            remover();
             break;
         case 5:
-            break;
-        case 6:
-            mudarCor();
             break;
         default :
             system("cls");
