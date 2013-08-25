@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include<ctype.h>
+#include <ctype.h>
 
 struct livros
 {
@@ -80,10 +80,9 @@ void inserir()
     novo->proximo=NULL;
 
     //Inserção do primeiro nó na lista
-    if(principal==NULL)
+    if(principal==NULL){
         principal=novo;
-    else
-    {
+    } else {
         percorre=principal;
         while(percorre->proximo!=NULL)
             percorre=percorre->proximo;
@@ -92,100 +91,42 @@ void inserir()
     return;
 }
 
-/*void remover()
-{
-    struct livros *percorre, *remove;
-    char titulo[50];
-    percorre=principal;
-
-    if (percorre==NULL)
-        return;
-
-    printf("Digite o titulo a remover: ");
-    scanf("%s",titulo);
-
-    if (percorre->proximo==NULL)
-    {
-        if (strcmp(percorre->titulo,titulo)==0)
-        {
-            principal=NULL;
-            free(percorre);
-            return;
-        }
-    }
-    if (strcmp(percorre->titulo,titulo)==0)
-    {
-        principal=percorre->proximo;
-        free(percorre);
-        return;
-    }
-    remove=percorre->proximo;
-    while(strcmp(remove->titulo,titulo)!=0)
-    {
-        percorre=remove;
-        remove=percorre->proximo;
-        if(remove==NULL)
-        {
-            printf("Não encontrado\n");
-            return;
-        }
-    }
-    percorre->proximo=remove->proximo;
-    free(remove);
-    return;
-}*/
-
-/* função retira: retira elemento da lista */
-
 void retira () {
+    system("cls");
 
-   struct livros *ant = NULL; /* ponteiro para elemento anterior */
+    struct livros *anterior = NULL;
+    char nome_livro[30];
+    struct livros *ponteiro_lista;
+    ponteiro_lista = principal;
 
-    char v[30];
-   struct livros *p;     /* ponteiro para percorrer a lista*/
-    printf("Remova o titulo :");
-    scanf("%s",v);
+    if(ponteiro_lista == NULL) {
+        printf("Lista vazia, insira um elemento para remover alguma coisa");
+        return 0;
+    }
 
+    printf("Insira o titulo do livro a ser removido :");
+    scanf("%s",nome_livro);
 
-   /* procura elemento na lista, guardando anterior */
+    while (ponteiro_lista != NULL && (strcmp(ponteiro_lista->titulo, nome_livro) != 0) ) {
+        anterior = ponteiro_lista;
+        ponteiro_lista = ponteiro_lista->proximo;
+    }
 
-   while (p != NULL && p->titulo != v) {
-
-      ant = p;
-
-      p = p->proximo;
-
-   }
-
-   /* verifica se achou elemento */
-
-   if (p == NULL)
-
-      printf("não achou nada");   /* não achou: retorna lista original */
-
-   /* retira elemento */
-
-   if (ant == NULL) {
-
-      /* retira elemento do inicio */
-
-      p = p->proximo;
-
-   }
-
-   else {
-
-      /* retira elemento do meio da lista */
-
-      ant->proximo = p->proximo;
-
-   }
-
-   free(p);
-
-   return 0;
+    if (ponteiro_lista == NULL) {
+        printf("não achou nada");
+    }
+    if (anterior == NULL) {//primeiro elemento da lista
+        ponteiro_lista = ponteiro_lista->proximo;
+        principal = ponteiro_lista;//gambiarra para funfar
+    } else {
+        anterior->proximo = ponteiro_lista->proximo;//faz o anterior apontar para o proximo elemento do que foi removido
+        free(ponteiro_lista);
+    }
+    return 0;
 
 }
+
+
 
 int main()
 {
@@ -194,7 +135,7 @@ int main()
     scanf("%d",&semente);
     srand(semente);
     system("cls");
-    while (opcao !=4)
+    while (opcao != 5)
     {
         printf("*===================================*\n");
         printf("*Trabalho de CCI - Biblioteca 09/2013\n");
@@ -219,7 +160,6 @@ int main()
             buscar();
             break;
         case 4:
-            //remover();
             retira();
             break;
         case 5:
