@@ -92,7 +92,7 @@ void inserir()
     return;
 }
 
-void remover()
+/*void remover()
 {
     struct livros *percorre, *remove;
     char titulo[50];
@@ -133,6 +133,58 @@ void remover()
     percorre->proximo=remove->proximo;
     free(remove);
     return;
+}*/
+
+/* função retira: retira elemento da lista */
+
+void retira () {
+
+   struct livros *ant = NULL; /* ponteiro para elemento anterior */
+
+    char v[30];
+   struct livros *p;     /* ponteiro para percorrer a lista*/
+    printf("Remova o titulo :");
+    scanf("%s",v);
+
+
+   /* procura elemento na lista, guardando anterior */
+
+   while (p != NULL && p->titulo != v) {
+
+      ant = p;
+
+      p = p->proximo;
+
+   }
+
+   /* verifica se achou elemento */
+
+   if (p == NULL)
+
+      printf("não achou nada");   /* não achou: retorna lista original */
+
+   /* retira elemento */
+
+   if (ant == NULL) {
+
+      /* retira elemento do inicio */
+
+      p = p->proximo;
+
+   }
+
+   else {
+
+      /* retira elemento do meio da lista */
+
+      ant->proximo = p->proximo;
+
+   }
+
+   free(p);
+
+   return 0;
+
 }
 
 int main()
@@ -167,7 +219,8 @@ int main()
             buscar();
             break;
         case 4:
-            remover();
+            //remover();
+            retira();
             break;
         case 5:
             break;
