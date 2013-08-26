@@ -75,30 +75,37 @@ void inserir()
 {
     system("cls");
     struct livros *novo, *percorre;
-    novo=malloc(sizeof(struct livros));
-    /*printf("Digite o Numero do registro :");
-    scanf("%d",&novo->numRegistro);*/
-    novo->numRegistro = rand() % 999;
-    printf("Digite o titulo : ");
-    scanf("%s",novo->titulo);
-    printf("Digite o Autor : ");
-    scanf("%s",novo->autor);
-    printf("Digite o Assunto : ");
-    scanf("%s",novo->assunto);
-    printf("\n\n");
-    novo->proximo=NULL;
+    char op[2]="n";
+    char op1[2]="s";
+    while(strcmp(op, op1) != 0) {
+        novo=malloc(sizeof(struct livros));
+        /*printf("Digite o Numero do registro :");
+        scanf("%d",&novo->numRegistro);*/
+        novo->numRegistro = rand() % 999;
+        printf("Digite o titulo : ");
+        scanf("%s",novo->titulo);
+        printf("Digite o Autor : ");
+        scanf("%s",novo->autor);
+        printf("Digite o Assunto :");
+        scanf("%s",novo->assunto);
+        printf("\n\n");
+        printf("Adicionar novo registro? <s/n> : ");
+        scanf("%s",op1);
+        system("cls");
+        novo->proximo=NULL;
 
-    //Inserção do primeiro nó na lista
-    if(principal==NULL)
-    {
-        principal=novo;
-    }
-    else
-    {
-        percorre=principal;
-        while(percorre->proximo!=NULL)
-            percorre=percorre->proximo;
-        percorre->proximo=novo;
+        //Inserção do primeiro nó na lista
+        if(principal==NULL)
+        {
+            principal=novo;
+        }
+        else
+        {
+            percorre=principal;
+            while(percorre->proximo!=NULL)
+                percorre=percorre->proximo;
+            percorre->proximo=novo;
+        }
     }
     return;
 }
@@ -193,7 +200,7 @@ void mudarCor()
             break;
         }
     }
-       return 0;
+    return 0;
 }
 
 
