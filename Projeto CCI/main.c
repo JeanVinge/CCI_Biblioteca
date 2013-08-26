@@ -12,8 +12,7 @@ struct livros
 };
 struct livros *principal=NULL;
 
-void listar()
-{
+void listar() {
     system("cls");
     printf("*====================================\n");
     printf("*Relatorio de livros adicionados\n");
@@ -35,8 +34,7 @@ void listar()
     return;
 }
 
-void buscar()
-{
+void buscar() {
     system("cls");
     struct livros *percorre;
     percorre=principal;
@@ -70,9 +68,7 @@ void buscar()
     return;
 }
 
-
-void inserir()
-{
+void inserir() {
     system("cls");
     struct livros *novo, *percorre;
     char op[2]="n";
@@ -110,8 +106,60 @@ void inserir()
     return;
 }
 
-void retira ()
-{
+void altera() {
+ system("cls");
+    struct livros *percorre;
+    percorre=principal;
+    int check=0, altera=0;
+    char tituloLivro[30], novoReg[30];
+    printf("Digite o titulo do livro a ser Alterado: ");
+    scanf("%s",tituloLivro);
+
+    while (percorre!=NULL)
+    {
+        if (strcmp(percorre->titulo, tituloLivro) ==0)
+        {
+            system("cls");
+            printf("=====================================\n");
+            printf("* Livro Encontrado\n");
+            printf("=====================================\n\n");
+            printf("Numero do Registro: %d\n",percorre->numRegistro);
+            printf("Titulo: %s\n",percorre->titulo);
+            printf("Autor: %s\n",percorre->autor);
+            printf("Assunto: %s\n\n",percorre->assunto);
+            printf("=====================================\n\n");
+            printf("* Voce Deseja Alterar? <1 - Titulo, 2 - Autor, 3 - Assunto> : ");
+            scanf("%d", &altera);
+            if (altera==1) {
+            printf("Novo titulo :");
+            scanf("%s", percorre->titulo);
+            }
+            if (altera==2) {
+            printf("Novo autor :");
+            scanf("%s", percorre->autor);
+            }
+            if (altera==3) {
+            printf("Novo assunto :");
+            scanf("%s", percorre->assunto);
+            }
+
+            system("pause");
+            printf("Itens atualizados, aperte enter para sair....");
+            check++;
+            percorre=NULL;
+        }
+        else
+        {
+            percorre=percorre->proximo;
+        }
+    }
+    if (check==0)
+    {
+        printf("\nO Livro %s não foi encontrado.\n", tituloLivro);
+    }
+    return;
+}
+void retira () {
     system("cls");
 
     struct livros *anterior = NULL;
@@ -152,8 +200,7 @@ void retira ()
 
 }
 
-void mudarCor()
-{
+void mudarCor() {
     int op=0;
     while (op != 7)
     {
@@ -203,9 +250,7 @@ void mudarCor()
     return 0;
 }
 
-
-int main()
-{
+int main() {
     int opcao=0, semente;
     printf("Digite um numero para gerar a sequencia randomica: ");
     scanf("%d",&semente);
@@ -219,7 +264,8 @@ int main()
         printf("* \t1 - Inserir Livro.\n");
         printf("* \t2 - Listar Livros.\n");
         printf("* \t3 - Buscar Livro.\n");
-        printf("* \t4 - Remover Livro.\n");
+        printf("* \t4 - Alterar Livro.\n");
+        printf("* \t5 - Remover Livro.\n");
         printf("* \t6 - Mudar cor.\n");
         printf("* \t7 - Sair.\n\n");
         printf("*===================================*\n");
@@ -238,9 +284,10 @@ int main()
             buscar();
             break;
         case 4:
-            retira();
+            altera();
             break;
         case 5:
+            retira();
             break;
         case 6:
             mudarCor();
