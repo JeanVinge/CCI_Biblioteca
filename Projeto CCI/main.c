@@ -171,6 +171,27 @@ void buscar()
     return 0;
 }
 
+struct livros * buscarUltimoLivroDaListaPrincipal(){
+    struct livros *percorre;
+    percorre=principal;
+    while(percorre->proximo!=NULL){
+        percorre=percorre->proximo;
+    }
+    return percorre;
+}
+
+void insereRegistroNaLista(struct livros *novo){
+    struct livros *percorre;
+    if(principal==NULL) {
+        principal=novo;
+    } else {
+        percorre= buscarUltimoLivroDaListaPrincipal();
+        percorre->proximo=novo;
+    }
+    return;
+}
+
+
 void inserir()
 {
     system("cls");
@@ -196,18 +217,9 @@ void inserir()
         system("cls");
         novo->proximo=NULL;
 
+        insereRegistroNaLista(novo);
         //Inserção do primeiro nó na lista
-        if(principal==NULL)
-        {
-            principal=novo;
-        }
-        else
-        {
-            percorre=principal;
-            while(percorre->proximo!=NULL)
-                percorre=percorre->proximo;
-            percorre->proximo=novo;
-        }
+
     }
     return;
 }
