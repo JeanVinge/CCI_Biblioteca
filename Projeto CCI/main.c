@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 
 struct livros
 {
@@ -195,33 +196,28 @@ void insereRegistroNaLista(struct livros *novo){
 void inserir()
 {
     system("cls");
-    struct livros *novo, *percorre;
+    struct livros *novo;
     char op[2]="n";
     char op1[2]="s";
-    while(strcmp(op, op1) != 0)
-    {
-        novo=malloc(sizeof(struct livros));
-        /*printf("Digite o Numero do registro :");
-        scanf("%d",&novo->numRegistro);*/
-        novo->numRegistro = rand() % 999;
-        printf("Digite o titulo : ");
-        scanf("%s",novo->titulo);
-        printf("Digite o Autor : ");
-        scanf("%s",novo->autor);
-        printf("Digite o Assunto :");
-        scanf("%s",novo->assunto);
-        printf("\n\n");
-        printf("Adicionar novo registro? <s/n> : ");
-        fflush(stdin);
-        scanf("%s",op1);
-        system("cls");
-        novo->proximo=NULL;
-
-        insereRegistroNaLista(novo);
-        //Inserção do primeiro nó na lista
-
+    novo=malloc(sizeof(struct livros));
+    novo->numRegistro = rand() % 999;
+    printf("Digite o titulo : ");
+    scanf("%s",novo->titulo);
+    printf("Digite o Autor : ");
+    scanf("%s",novo->autor);
+    printf("Digite o Assunto :");
+    scanf("%s",novo->assunto);
+    printf("\n\n");
+    printf("Adicionar novo registro? <s/n> : ");
+    fflush(stdin);
+    scanf("%s",op1);
+    novo->proximo=NULL;
+    insereRegistroNaLista(novo);
+    if(strcmp(op, op1) != 0){
+        return inserir();
+    } else {
+        return;
     }
-    return;
 }
 
 void altera()
