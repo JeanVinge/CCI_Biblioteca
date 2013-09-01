@@ -210,6 +210,7 @@ void buscar()
 
     return 0;
 }
+
 void deveInserirMaisRegistros(){
     char op[2]="n";
     char op1[2]="s";
@@ -223,8 +224,8 @@ void deveInserirMaisRegistros(){
         return;
     }
 }
-void inserir()
-{
+
+void inserir(){
     system("cls");
     struct livros *novo;
     novo=malloc(sizeof(struct livros));
@@ -243,13 +244,13 @@ void inserir()
 
 }
 
-void altera()
-{
+void altera() {
     system("cls");
     struct livros *percorre;
     percorre=principal;
     int check=0, altera=0;
     char tituloLivro[30];
+
     printf("Digite o titulo do livro a ser Alterado: ");
     scanf("%s",tituloLivro);
     percorre = buscarLivroPorTitulo(tituloLivro);
@@ -280,51 +281,34 @@ void altera()
     return 0;
 }
 
-void retira ()
-{
+void retira (){
     system("cls");
     struct livros *anterior = NULL;
-    //struct auditoria *auditor;
+
     char nome_livro[30];
     struct livros *ponteiro_lista;
     ponteiro_lista = principal;
 
-    if(ponteiro_lista == NULL)
-    {
-        printf("Lista vazia, insira um elemento para remover alguma coisa");
-        return 0;
-    }
-
     printf("Insira o titulo do livro a ser removido :");
     scanf("%s",nome_livro);
 
-    while (ponteiro_lista != NULL && (strcmp(ponteiro_lista->titulo, nome_livro) != 0) )
-    {
+    while (ponteiro_lista != NULL && (strcmp(ponteiro_lista->titulo, nome_livro) != 0) ) {
         anterior = ponteiro_lista;
         ponteiro_lista = ponteiro_lista->proximo;
     }
 
-    if (ponteiro_lista == NULL)
-    {
+    if (ponteiro_lista == NULL) {
         printf("Registro não encontrado.");
     }
-    if (anterior == NULL)  //primeiro elemento da lista
-    {
+
+    if (anterior == NULL) {  //primeiro elemento da lista
         ponteiro_lista = ponteiro_lista->proximo;
         principal = ponteiro_lista;//gambiarra para funfar
-    }
-    else
-    {
-        //auditor=malloc(sizeof(struct auditoria));
-        //auditor->assunto = ponteiro_lista->assunto;
-        //auditor->autor = ponteiro_lista->autor;
-        //auditor->titulo = ponteiro_lista->titulo;
-        //auditor->numRegistro = ponteiro_lista->numRegistro;
+    } else {
         anterior->proximo = ponteiro_lista->proximo;//faz o anterior apontar para o proximo elemento do que foi removido
         free(ponteiro_lista);
     }
     return 0;
-
 }
 
 void mudarCor()
