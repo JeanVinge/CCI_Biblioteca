@@ -93,28 +93,30 @@ void buscarListaLivroPor(enum TIPO_PESQUISA_LIVRO tipoPesquisa, char busca[30]){
     struct livros *percorre;
     struct livros *achado;
     percorre=principal;
-    bool achou = false;
+    bool achou = false, escreverValor = false;
     system("cls");
     while (percorre!=NULL) {
+        escreverValor = false;
         if(tipoPesquisa == titulo){
              if (strcmp(percorre->titulo, busca) ==0) {
                 achado= percorre;
-                achou=true;
+                escreverValor=true;
             }
         } else if (tipoPesquisa == autor) {
             if (strcmp(percorre->autor, busca) ==0) {
                 achado=percorre;
-                achou=true;
+                escreverValor=true;
             }
         } else if (tipoPesquisa == assunto) {
             if (strcmp(percorre->assunto, busca) ==0) {
                 achado= percorre;
-                achou=true;
+                escreverValor=true;
             }
         }
-        if(achou == true){
+        if(escreverValor == true){
             escreverRegistroEncontrado();
             exibirInformacoesDoLivro(achado);
+            achou = true;
         }
         percorre=percorre->proximo;
     }
@@ -168,14 +170,8 @@ void listar()
     return;
 }
 
-
-void buscar()
-{
-    system("cls");
-    struct livros *percorre;
-    percorre=principal;
-    int check=0, op=0;
-    char busca[30];
+int escreverMenuParaBuscaDeLivros(){
+    int opcao = 0;
     printf("=====================================\n");
     printf("* Opcoes de busca.\n");
     printf("=====================================\n\n");
@@ -185,8 +181,16 @@ void buscar()
     printf("* \t4 - Sair.\n");
     printf("=====================================\n\n");
     printf("Escolha uma opcao: ");
-    scanf("%d", &op);
+    scanf("%d", &opcao);
     system("cls");
+    return opcao;
+}
+void buscar()
+{
+    system("cls");
+    int op=0;
+    char busca[30];
+    op = escreverMenuParaBuscaDeLivros();
 
     if (op==1) {
         procurarLivroPorTituloMandandoMensagem();
