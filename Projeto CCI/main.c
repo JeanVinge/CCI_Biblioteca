@@ -319,6 +319,7 @@ void retira (){
     } else {
         insereRegistroNaListaExcluidos(ponteiro_lista);
         anterior->proximo = ponteiro_lista->proximo;//faz o anterior apontar para o proximo elemento do que foi removido
+        ponteiro_lista->proximo = NULL;
     }
     //free(ponteiro_lista);
     return;
@@ -416,7 +417,7 @@ int main(){
         printf("* \t4 - Alterar Livro.\n");
         printf("* \t5 - Remover Livro.\n");
         printf("* \t6 - Mudar cor.\n");
-        printf("* \t7 - Lixeira (Nao Funciona ainda.).\n");
+        printf("* \t7 - Lixeira.\n");
         printf("* \t8 - Sair.\n\n");
         printf("*===================================*\n");
         printf("\n\nEscolha uma opcao: ");
