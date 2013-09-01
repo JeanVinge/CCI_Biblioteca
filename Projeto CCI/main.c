@@ -20,16 +20,7 @@ struct livros
 };
 
 struct livros *principal=NULL;
-
-struct auditoria
-{
-    char titulo[30];
-    char assunto[50];
-    char autor[30];
-    int numRegistro;
-    struct auditoria *proximo;
-};
-struct auditoria *log=NULL;
+struct livros *livros_excluidos=NULL;
 
 void escreverFinalDaOperacaoApertarEnterSair(){
     printf("=====================================\n\n");
@@ -314,8 +305,7 @@ void retira (){
 void mudarCor()
 {
     int op=0;
-    while (op != 7)
-    {
+    while (op != 7) {
         system("cls");
         printf("*===================================*\n");
         printf("*Escolha a cor da letra/Fundo de tela\n");
@@ -354,8 +344,7 @@ void mudarCor()
         case 7:
             break;
         default :
-            system("cls");
-            printf("\n[ERRO] - Opcao Invalida.\n\n");
+            escreverOpcaoInvalida();
             break;
         }
     }
@@ -374,25 +363,20 @@ void lixeira() {
     printf("*====================================\n");
     printf("*Lixeira items excluidos\n");
     printf("*====================================\n\n");
-    struct auditoria *percorre;
-    percorre=log;
+    struct livros *percorre;
+    percorre=livros_excluidos;
     while (percorre!=NULL)
     {
         printf("=====================================\n");
-        printf("Numero do Registro: %d\n",percorre->numRegistro);
-        printf("Titulo: %s\n",percorre->titulo);
-        printf("Autor: %s\n",percorre->autor);
-        printf("Assunto: %s\n",percorre->assunto);
+        exibirInformacoesDoLivro(percorre);
         printf("=====================================\n\n");
         percorre=percorre->proximo;
     }
-    system("pause");
-    printf("Aperte enter para sair.......\n\n");
+    escreverFinalDaOperacaoApertarEnterSair();
     return;
 }
 
-int main()
-{
+int main(){
     int opcao=0, semente;
     printf("Digite um numero para gerar a sequencia randomica: ");
     scanf("%d",&semente);
@@ -445,8 +429,7 @@ int main()
         case 8:
             break;
         default :
-            system("cls");
-            printf("\n[ERRO] - Opcao Invalida.\n\n");
+            escreverOpcaoInvalida();
             break;
         }
     }
