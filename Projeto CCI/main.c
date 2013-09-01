@@ -488,8 +488,13 @@ void menuPrincipal() {
 int main(){
     int semente;
     printf("Digite um numero para gerar a sequencia randomica: ");
-    scanf("%d",&semente);
-    srand(semente);
-    menuPrincipal();
+    //scanf("%d",&semente);
+    if (scanf("%d",&semente) == 1) {
+        srand(semente);
+        menuPrincipal();
+    } else {
+        printf("Não eh um numero valido.\n");
+    }
+
     return 0;
 }
