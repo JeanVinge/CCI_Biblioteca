@@ -340,8 +340,7 @@ void removerLivroDaListaDeCadastro(){
     }
 
     if (ponteiro_lista == NULL) {
-        printf("Registro não encontrado.\n");
-        system("pause");
+        enviarMensagemRegistroNaoEncontrado();
         return;
     }
 
@@ -488,7 +487,6 @@ void menuPrincipal() {
 int main(){
     int semente;
     printf("Digite um numero para gerar a sequencia randomica: ");
-    //scanf("%d",&semente);
     if (scanf("%d",&semente) == 1) {
         srand(semente);
         menuPrincipal();
