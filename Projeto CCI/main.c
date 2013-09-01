@@ -9,7 +9,6 @@ enum TIPO_PESQUISA_LIVRO
     assunto,
     autor
 };
-void inserir();
 
 struct livros
 {
@@ -19,6 +18,38 @@ struct livros
     int numRegistro;
     struct livros *proximo;
 };
+
+void escreverFinalDaOperacaoApertarEnterSair();
+void enviarMensagemRegistroNaoEncontrado();
+
+void insereRegistroNaListaPrincipalDeLivros(struct livros *novo);
+void insereRegistroNaListaDeLivrosExcluidos(struct livros *excluido);
+void inserirNovoLivro();
+void exibirInformacoesDoLivro(struct livros * livro);
+
+void escreverRegistroEncontrado();
+void listarLivrosCadastrados();
+void escreverOpcaoInvalida();
+void menuBuscar();
+int escreverMenuComOpcoesParaBuscaDeLivros();
+void deveInserirMaisRegistros();
+void mudarConfiguracoesDeCor();
+void verificaSeListaDeLivrosEstaVazia();
+
+void removerLivroDaListaDeCadastro ();
+void exibirDadosDosLivrosExcluidos();
+
+
+void buscarLivrosPor(enum TIPO_PESQUISA_LIVRO tipoPesquisa, char busca[30]);
+void procurarLivrosPorTitulo();
+void procurarLivroPorAutor();
+void procurarLivroPorAssunto();
+void alterarDadosDoLivroPassandoTitulo();
+struct livros * buscarUltimoLivroDaListaPrincipal();
+struct livros * buscarUltimoLivroDaListaDeExcluidos();
+struct livros * buscarLivroPorTitulo(char titulo[30]);
+
+
 
 struct livros *principal=NULL;
 struct livros *livros_excluidos=NULL;
@@ -52,7 +83,7 @@ struct livros * buscarUltimoLivroDaListaDeExcluidos(){
     return percorre;
 }
 
-void insereRegistroNaLista(struct livros *novo){
+void insereRegistroNaListaPrincipalDeLivros(struct livros *novo){
     struct livros *percorre;
     if(principal==NULL) {
         principal=novo;
@@ -63,7 +94,7 @@ void insereRegistroNaLista(struct livros *novo){
     return;
 }
 
-void insereRegistroNaListaExcluidos(struct livros *excluido){
+void insereRegistroNaListaDeLivrosExcluidos(struct livros *excluido){
     struct livros *percorre;
     if(livros_excluidos==NULL) {
         livros_excluidos=excluido;
@@ -87,7 +118,7 @@ void escreverRegistroEncontrado(){
     printf("=====================================\n");
 }
 
-void buscarListaLivroPor(enum TIPO_PESQUISA_LIVRO tipoPesquisa, char busca[30]){
+void buscarLivrosPor(enum TIPO_PESQUISA_LIVRO tipoPesquisa, char busca[30]){
     struct livros *percorre;
     struct livros *achado;
     percorre=principal;
@@ -140,31 +171,31 @@ struct livros * buscarLivroPorTitulo(char titulo[30]){
     return NULL;
 }
 
-void procurarLivroPorTituloMandandoMensagem(){
+void procurarLivrosPorTitulo(){
     char busca[30];
     printf("Digite o titulo do livro a ser procurado: ");
     scanf("%s",busca);
     enum TIPO_PESQUISA_LIVRO tipo = titulo;
-    buscarListaLivroPor(tipo,busca);
+    buscarLivrosPor(tipo,busca);
 }
 
-void procurarLivroPorAutorMandandoMensagem(){
+void procurarLivroPorAutor(){
     char busca[30];
     printf("Digite o autor do livro a ser procurado: ");
     scanf("%s",busca);
     enum TIPO_PESQUISA_LIVRO tipo = autor;
-    buscarListaLivroPor(tipo,busca);
+    buscarLivrosPor(tipo,busca);
 }
 
-void procurarLivroPorAssuntoMandandoMensagem(){
+void procurarLivroPorAssunto(){
     char busca[30];
     printf("Digite o assunto do livro a ser procurado: ");
     scanf("%s",busca);
     enum TIPO_PESQUISA_LIVRO tipo = assunto;
-    buscarListaLivroPor(tipo,busca);
+    buscarLivrosPor(tipo,busca);
 }
-void listar()
-{
+
+void listarLivrosCadastrados() {
     system("cls");
     printf("*====================================\n");
     printf("*Relatorio de livros adicionados\n");
@@ -187,7 +218,7 @@ void escreverOpcaoInvalida() {
     system("pause");
 }
 
-int escreverMenuParaBuscaDeLivros(){
+int escreverMenuComOpcoesParaBuscaDeLivros(){
     int opcao = 0;
     printf("=====================================\n");
     printf("* Opcoes de busca.\n");
@@ -202,18 +233,18 @@ int escreverMenuParaBuscaDeLivros(){
     system("cls");
     return opcao;
 }
-void buscar()
-{
+
+void menuBuscar() {
     system("cls");
     int op=0;
-    op = escreverMenuParaBuscaDeLivros();
+    op = escreverMenuComOpcoesParaBuscaDeLivros();
 
     if (op==1) {
-        procurarLivroPorTituloMandandoMensagem();
+        procurarLivrosPorTitulo();
     } else if (op==2) {
-        procurarLivroPorAutorMandandoMensagem();
+        procurarLivroPorAutor();
     } else if (op==3) {
-        procurarLivroPorAssuntoMandandoMensagem();
+        procurarLivroPorAssunto();
     } else {
         escreverOpcaoInvalida();
         return;
@@ -230,13 +261,13 @@ void deveInserirMaisRegistros(){
     fflush(stdin);
     scanf("%s",op1);
     if(strcmp(op, op1) != 0){
-        return inserir();
+        return inserirNovoLivro();
     } else {
         return;
     }
 }
 
-void inserir(){
+void inserirNovoLivro(){
     system("cls");
     struct livros *novo;
     novo=malloc(sizeof(struct livros));
@@ -249,17 +280,17 @@ void inserir(){
     scanf("%s",novo->assunto);
     printf("\n\n");
     novo->proximo=NULL;
-    insereRegistroNaLista(novo);
+    insereRegistroNaListaPrincipalDeLivros(novo);
 
     return deveInserirMaisRegistros();
 
 }
 
-void altera() {
+void alterarDadosDoLivroPassandoTitulo() {
     system("cls");
     struct livros *percorre;
     percorre=principal;
-    int altera=0;
+    int alterarDadosDoLivroPassandoTitulo=0;
     char tituloLivro[30];
 
     printf("Digite o titulo do livro a ser Alterado: ");
@@ -273,14 +304,14 @@ void altera() {
         printf("=====================================\n\n");
 
         printf("* Voce Deseja Alterar?  1 - Titulo, 2 - Autor, 3 - Assunto : ");
-        scanf("%d", &altera);
-        if (altera==1) {
+        scanf("%d", &alterarDadosDoLivroPassandoTitulo);
+        if (alterarDadosDoLivroPassandoTitulo==1) {
             printf("Novo titulo :");
             scanf("%s", percorre->titulo);
-        } else if (altera==2) {
+        } else if (alterarDadosDoLivroPassandoTitulo==2) {
             printf("Novo autor :");
             scanf("%s", percorre->autor);
-        } else if (altera==3) {
+        } else if (alterarDadosDoLivroPassandoTitulo==3) {
             printf("Novo assunto :");
             scanf("%s", percorre->assunto);
         } else {
@@ -292,7 +323,7 @@ void altera() {
     return;
 }
 
-void retira (){
+void removerLivroDaListaDeCadastro(){
     system("cls");
     struct livros *anterior = NULL;
 
@@ -309,15 +340,18 @@ void retira (){
     }
 
     if (ponteiro_lista == NULL) {
-        printf("Registro não encontrado.");
+        printf("Registro não encontrado.\n");
+        system("pause");
+        return;
     }
 
     if (anterior == NULL) {  //primeiro elemento da lista
-        insereRegistroNaListaExcluidos(ponteiro_lista);
+        insereRegistroNaListaDeLivrosExcluidos(ponteiro_lista);
         ponteiro_lista = ponteiro_lista->proximo;
         principal = ponteiro_lista;
+        ponteiro_lista=NULL;
     } else {
-        insereRegistroNaListaExcluidos(ponteiro_lista);
+        insereRegistroNaListaDeLivrosExcluidos(ponteiro_lista);
         anterior->proximo = ponteiro_lista->proximo;//faz o anterior apontar para o proximo elemento do que foi removido
         ponteiro_lista->proximo = NULL;
     }
@@ -325,8 +359,7 @@ void retira (){
     return;
 }
 
-void mudarCor()
-{
+void mudarConfiguracoesDeCor() {
     int op=0;
     while (op != 7) {
         system("cls");
@@ -374,14 +407,14 @@ void mudarCor()
     return;
 }
 
-void verificaLista() {
+void verificaSeListaDeLivrosEstaVazia() {
     if (principal == NULL) {
         printf("Lista vazia, insira um registro.");
         return;
     }
 }
 
-void lixeira() {
+void exibirDadosDosLivrosExcluidos() {
     system("cls");
     printf("*====================================\n");
     printf("*Lixeira items excluidos\n");
@@ -399,63 +432,64 @@ void lixeira() {
     return;
 }
 
-
+void menuPrincipal() {
+    int opcao=0;
+    system("cls");
+    printf("*===================================*\n");
+    printf("*Trabalho de CCI - Biblioteca 09/2013\n");
+    printf("*===================================*\n\n");
+    printf("* \t1 - Inserir Livro.\n");
+    printf("* \t2 - Listar Livros.\n");
+    printf("* \t3 - Buscar Livro.\n");
+    printf("* \t4 - Alterar Livro.\n");
+    printf("* \t5 - Remover Livro.\n");
+    printf("* \t6 - Mudar cor.\n");
+    printf("* \t7 - Lixeira.\n");
+    printf("* \t8 - Sair.\n\n");
+    printf("*===================================*\n");
+    printf("\n\nEscolha uma opcao: ");
+    scanf("%d",&opcao);
+    printf("\n\n");
+    switch (opcao) {
+    case 1:
+        inserirNovoLivro();
+        break;
+    case 2:
+        verificaSeListaDeLivrosEstaVazia();
+        listarLivrosCadastrados();
+        break;
+    case 3:
+        verificaSeListaDeLivrosEstaVazia();
+        menuBuscar();
+        break;
+    case 4:
+        verificaSeListaDeLivrosEstaVazia();
+        alterarDadosDoLivroPassandoTitulo();
+        break;
+    case 5:
+        verificaSeListaDeLivrosEstaVazia();
+        removerLivroDaListaDeCadastro();
+        break;
+    case 6:
+        mudarConfiguracoesDeCor();
+        break;
+    case 7:
+        exibirDadosDosLivrosExcluidos();
+        break;
+    case 8:
+        return;
+        break;
+    default :
+        escreverOpcaoInvalida();
+        break;
+    }
+    menuPrincipal();
+}
 int main(){
-   int opcao=0, semente;
+    int semente;
     printf("Digite um numero para gerar a sequencia randomica: ");
     scanf("%d",&semente);
     srand(semente);
-    while (opcao != 8)
-    {
-        system("cls");
-        printf("*===================================*\n");
-        printf("*Trabalho de CCI - Biblioteca 09/2013\n");
-        printf("*===================================*\n\n");
-        printf("* \t1 - Inserir Livro.\n");
-        printf("* \t2 - Listar Livros.\n");
-        printf("* \t3 - Buscar Livro.\n");
-        printf("* \t4 - Alterar Livro.\n");
-        printf("* \t5 - Remover Livro.\n");
-        printf("* \t6 - Mudar cor.\n");
-        printf("* \t7 - Lixeira.\n");
-        printf("* \t8 - Sair.\n\n");
-        printf("*===================================*\n");
-        printf("\n\nEscolha uma opcao: ");
-        scanf("%d",&opcao);
-        printf("\n\n");
-        switch (opcao)
-        {
-        case 1:
-            inserir();
-            break;
-        case 2:
-            verificaLista();
-            listar();
-            break;
-        case 3:
-            verificaLista();
-            buscar();
-            break;
-        case 4:
-            verificaLista();
-            altera();
-            break;
-        case 5:
-            verificaLista();
-            retira();
-            break;
-        case 6:
-            mudarCor();
-            break;
-        case 7:
-            lixeira();
-            break;
-        case 8:
-            break;
-        default :
-            escreverOpcaoInvalida();
-            break;
-        }
-    }
+    menuPrincipal();
     return 0;
 }
