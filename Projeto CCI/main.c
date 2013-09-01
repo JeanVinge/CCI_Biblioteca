@@ -8,7 +8,8 @@ enum TIPO_PESQUISA_LIVRO            /* Defines an enumeration type    */
     titulo,
     assunto,
     autor
-}tipoPesquisa;
+};
+
 struct livros
 {
     char titulo[30];
@@ -99,17 +100,17 @@ void buscarListaLivroPor(enum TIPO_PESQUISA_LIVRO tipoPesquisa, char busca[30]){
         escreverValor = false;
         if(tipoPesquisa == titulo){
              if (strcmp(percorre->titulo, busca) ==0) {
-                achado= percorre;
+                achado = percorre;
                 escreverValor=true;
             }
         } else if (tipoPesquisa == autor) {
             if (strcmp(percorre->autor, busca) ==0) {
-                achado=percorre;
+                achado = percorre;
                 escreverValor=true;
             }
         } else if (tipoPesquisa == assunto) {
             if (strcmp(percorre->assunto, busca) ==0) {
-                achado= percorre;
+                achado = percorre;
                 escreverValor=true;
             }
         }
@@ -165,8 +166,7 @@ void listar()
         printf("=====================================\n\n");
         percorre=percorre->proximo;
     }
-    system("pause");
-    printf("Aperte enter para sair.......\n\n");
+    escreverFinalDaOperacaoApertarEnterSair();
     return;
 }
 
@@ -204,13 +204,23 @@ void buscar()
 
     return 0;
 }
+void deveInserirMaisRegistros(){
+    char op[2]="n";
+    char op1[2]="s";
 
+    printf("Adicionar novo registro? <s/n> : ");
+    fflush(stdin);
+    scanf("%s",op1);
+    if(strcmp(op, op1) != 0){
+        return inserir();
+    } else {
+        return;
+    }
+}
 void inserir()
 {
     system("cls");
     struct livros *novo;
-    char op[2]="n";
-    char op1[2]="s";
     novo=malloc(sizeof(struct livros));
     novo->numRegistro = rand() % 999;
     printf("Digite o titulo : ");
@@ -220,16 +230,11 @@ void inserir()
     printf("Digite o Assunto :");
     scanf("%s",novo->assunto);
     printf("\n\n");
-    printf("Adicionar novo registro? <s/n> : ");
-    fflush(stdin);
-    scanf("%s",op1);
     novo->proximo=NULL;
     insereRegistroNaLista(novo);
-    if(strcmp(op, op1) != 0){
-        return inserir();
-    } else {
-        return;
-    }
+
+    return deveInserirMaisRegistros();
+
 }
 
 void altera()
