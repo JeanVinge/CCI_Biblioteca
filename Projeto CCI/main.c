@@ -3,6 +3,12 @@
 #include <string.h>
 #include <stdbool.h>
 
+enum TIPO_PESQUISA_LIVRO            /* Defines an enumeration type    */
+{
+    titulo,
+    assunto,
+    autor
+}tipoPesquisa;
 struct livros
 {
     char titulo[30];
@@ -83,21 +89,37 @@ void escreverRegistroEncontrado(){
     printf("=====================================\n");
 }
 
-void buscarListaLivroPorTitulo(char titulo[30]){
+void buscarListaLivroPor(enum TIPO_PESQUISA_LIVRO tipoPesquisa, char busca[30]){
     struct livros *percorre;
+    struct livros *achado;
     percorre=principal;
     bool achou = false;
     system("cls");
     while (percorre!=NULL) {
-        if (strcmp(percorre->titulo, titulo) ==0) {
+        if(tipoPesquisa == titulo){
+             if (strcmp(percorre->titulo, busca) ==0) {
+                achado= percorre;
+                achou=true;
+            }
+        } else if (tipoPesquisa == autor) {
+            if (strcmp(percorre->autor, busca) ==0) {
+                achado=percorre;
+                achou=true;
+            }
+        } else if (tipoPesquisa == assunto) {
+            if (strcmp(percorre->assunto, busca) ==0) {
+                achado= percorre;
+                achou=true;
+            }
+        }
+        if(achou == true){
             escreverRegistroEncontrado();
-            exibirInformacoesDoLivro(percorre);
-            achou=true;
+            exibirInformacoesDoLivro(achado);
         }
         percorre=percorre->proximo;
     }
     if(achou == false) {
-        printf("\nO Livro %s não foi encontrado.\n", titulo);
+        printf("\nO Livro %s não foi encontrado.\n", busca);
     }
     system("pause");
     return;
@@ -105,12 +127,27 @@ void buscarListaLivroPorTitulo(char titulo[30]){
 
 void procurarLivroPorTituloMandandoMensagem(){
     char busca[30];
-    struct livros *percorre;
     printf("Digite o titulo do livro a ser procurado: ");
     scanf("%s",busca);
-    buscarListaLivroPorTitulo(busca);
+    enum TIPO_PESQUISA_LIVRO tipo = titulo;
+    buscarListaLivroPor(tipo,busca);
 }
 
+void procurarLivroPorAutorMandandoMensagem(){
+    char busca[30];
+    printf("Digite o autor do livro a ser procurado: ");
+    scanf("%s",busca);
+    enum TIPO_PESQUISA_LIVRO tipo = autor;
+    buscarListaLivroPor(tipo,busca);
+}
+
+void procurarLivroPorAssuntoMandandoMensagem(){
+    char busca[30];
+    printf("Digite o assunto do livro a ser procurado: ");
+    scanf("%s",busca);
+    enum TIPO_PESQUISA_LIVRO tipo = assunto;
+    buscarListaLivroPor(tipo,busca);
+}
 void listar()
 {
     system("cls");
@@ -153,76 +190,11 @@ void buscar()
 
     if (op==1) {
         procurarLivroPorTituloMandandoMensagem();
-    }
-
-    if (op==2)
-    {
-        printf("Digite o autor do livro a ser procurado: ");
-        scanf("%s",busca);
-        while (percorre!=NULL)
-        {
-            if (strcmp(percorre->assunto, busca) ==0)
-            {
-                system("cls");
-                printf("=====================================\n");
-                printf("*Registro encontrado! \n");
-                printf("=====================================\n");
-                printf("* \tNumero do Registro: %d\n",percorre->numRegistro);
-                printf("* \tTitulo: %s\n",percorre->titulo);
-                printf("* \tAutor: %s\n",percorre->autor);
-                printf("* \tAssunto: %s\n",percorre->assunto);
-                printf("=====================================\n\n");
-                check++;
-                percorre=NULL;
-                system("pause");
-                printf("Aperte enter para sair.......\n\n");
-            }
-            else
-            {
-                percorre=percorre->proximo;
-            }
-        }
-        if (check==0)
-        {
-            printf("\nRegistro não foi encontrado.\n");
-        }
-    }
-
-    if (op==3)
-    {
-        printf("Digite o assunto do livro a ser procurado: ");
-        scanf("%s",busca);
-        while (percorre!=NULL)
-        {
-            if (strcmp(percorre->assunto, busca) ==0)
-            {
-                system("cls");
-                printf("=====================================\n");
-                printf("*Registro encontrado! \n");
-                printf("=====================================\n");
-                printf("* \tNumero do Registro: %d\n",percorre->numRegistro);
-                printf("* \tTitulo: %s\n",percorre->titulo);
-                printf("* \tAutor: %s\n",percorre->autor);
-                printf("* \tAssunto: %s\n",percorre->assunto);
-                printf("=====================================\n\n");
-                check++;
-                percorre=NULL;
-                system("pause");
-                printf("Aperte enter para sair.......\n\n");
-            }
-            else
-            {
-                percorre=percorre->proximo;
-            }
-        }
-        if (check==0)
-        {
-            printf("\nRegistro não foi encontrado.\n");
-        }
-    }
-
-    if (op==4)
-    {
+    } else if (op==2) {
+        procurarLivroPorAutorMandandoMensagem();
+    } else if (op==3) {
+        procurarLivroPorAssuntoMandandoMensagem();
+    } else {
         return 0;
     }
 
