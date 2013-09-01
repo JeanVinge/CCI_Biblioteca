@@ -9,6 +9,7 @@ enum TIPO_PESQUISA_LIVRO
     assunto,
     autor
 };
+void inserir();
 
 struct livros
 {
@@ -42,6 +43,15 @@ struct livros * buscarUltimoLivroDaListaPrincipal(){
     return percorre;
 }
 
+struct livros * buscarUltimoLivroDaListaDeExcluidos(){
+    struct livros *percorre;
+    percorre=livros_excluidos;
+    while(percorre->proximo!=NULL){
+        percorre=percorre->proximo;
+    }
+    return percorre;
+}
+
 void insereRegistroNaLista(struct livros *novo){
     struct livros *percorre;
     if(principal==NULL) {
@@ -49,6 +59,17 @@ void insereRegistroNaLista(struct livros *novo){
     } else {
         percorre= buscarUltimoLivroDaListaPrincipal();
         percorre->proximo=novo;
+    }
+    return;
+}
+
+void insereRegistroNaListaExcluidos(struct livros *excluido){
+    struct livros *percorre;
+    if(livros_excluidos==NULL) {
+        livros_excluidos=excluido;
+    } else {
+        percorre= buscarUltimoLivroDaListaDeExcluidos();
+        percorre->proximo=excluido;
     }
     return;
 }
@@ -185,7 +206,6 @@ void buscar()
 {
     system("cls");
     int op=0;
-    char busca[30];
     op = escreverMenuParaBuscaDeLivros();
 
     if (op==1) {
@@ -196,10 +216,10 @@ void buscar()
         procurarLivroPorAssuntoMandandoMensagem();
     } else {
         escreverOpcaoInvalida();
-        return 0;
+        return;
     }
 
-    return 0;
+    return;
 }
 
 void deveInserirMaisRegistros(){
@@ -239,7 +259,7 @@ void altera() {
     system("cls");
     struct livros *percorre;
     percorre=principal;
-    int check=0, altera=0;
+    int altera=0;
     char tituloLivro[30];
 
     printf("Digite o titulo do livro a ser Alterado: ");
@@ -269,7 +289,7 @@ void altera() {
 
         escreverFinalDaOperacaoApertarEnterSair();
     }
-    return 0;
+    return;
 }
 
 void retira (){
@@ -293,13 +313,15 @@ void retira (){
     }
 
     if (anterior == NULL) {  //primeiro elemento da lista
+        insereRegistroNaListaExcluidos(ponteiro_lista);
         ponteiro_lista = ponteiro_lista->proximo;
-        principal = ponteiro_lista;//gambiarra para funfar
+        principal = ponteiro_lista;
     } else {
+        insereRegistroNaListaExcluidos(ponteiro_lista);
         anterior->proximo = ponteiro_lista->proximo;//faz o anterior apontar para o proximo elemento do que foi removido
-        free(ponteiro_lista);
     }
-    return 0;
+    //free(ponteiro_lista);
+    return;
 }
 
 void mudarCor()
@@ -348,13 +370,13 @@ void mudarCor()
             break;
         }
     }
-    return 0;
+    return;
 }
 
 void verificaLista() {
     if (principal == NULL) {
         printf("Lista vazia, insira um registro.");
-        return 0;
+        return;
     }
 }
 
@@ -376,8 +398,9 @@ void lixeira() {
     return;
 }
 
+
 int main(){
-    int opcao=0, semente;
+   int opcao=0, semente;
     printf("Digite um numero para gerar a sequencia randomica: ");
     scanf("%d",&semente);
     srand(semente);
@@ -424,7 +447,7 @@ int main(){
             mudarCor();
             break;
         case 7:
-            //lixeira();
+            lixeira();
             break;
         case 8:
             break;
