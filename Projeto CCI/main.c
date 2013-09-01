@@ -25,6 +25,7 @@ void enviarMensagemRegistroNaoEncontrado();
 void insereRegistroNaListaPrincipalDeLivros(struct livros *novo);
 void insereRegistroNaListaDeLivrosExcluidos(struct livros *excluido);
 void inserirNovoLivro();
+void inserirNovoLivroOrdenando();
 void exibirInformacoesDoLivro(struct livros * livro);
 
 void escreverRegistroEncontrado();
@@ -81,6 +82,24 @@ struct livros * buscarUltimoLivroDaListaDeExcluidos(){
         percorre=percorre->proximo;
     }
     return percorre;
+}
+
+void inserirNovoLivroOrdenando(struct livros *novo){
+    struct livros *percorre;
+    percorre=principal;
+    struct livros *anterior = NULL;
+
+    if(principal==NULL) {
+        principal=novo;
+    } else {
+        while(percorre != NULL && (percorre->numRegistro < novo->numRegistro)) {
+            anterior = percorre;
+            percorre = percorre->proximo;
+        }
+        anterior->proximo = novo;
+        novo->proximo = percorre;
+    }
+    return;
 }
 
 void insereRegistroNaListaPrincipalDeLivros(struct livros *novo){
@@ -280,7 +299,7 @@ void inserirNovoLivro(){
     scanf("%s",novo->assunto);
     printf("\n\n");
     novo->proximo=NULL;
-    insereRegistroNaListaPrincipalDeLivros(novo);
+    inserirNovoLivroOrdenando(novo);
 
     return deveInserirMaisRegistros();
 
