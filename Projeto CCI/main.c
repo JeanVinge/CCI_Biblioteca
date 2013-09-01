@@ -3,16 +3,14 @@
 #include <string.h>
 #include <stdbool.h>
 
-enum TIPO_PESQUISA_LIVRO
-{
+enum TIPO_PESQUISA_LIVRO{
     titulo,
     assunto,
     autor,
     numeroRegistro
 };
 
-struct livros
-{
+struct livros {
     char titulo[30];
     char assunto[50];
     char autor[30];
@@ -263,7 +261,7 @@ int escreverMenuComOpcoesParaBuscaDeLivros(){
     printf("* \t2 - Autor.\n");
     printf("* \t3 - Assunto.\n");
     printf("* \t4 - Numero Registro.\n");
-    printf("* \t5 - Sair.\n");
+    printf("* \t0 - Sair.\n");
     printf("=====================================\n\n");
     printf("Escolha uma opcao: ");
     scanf("%d", &opcao);
@@ -284,7 +282,7 @@ void menuBuscar() {
         procurarLivroPorAssunto();
     } else if (op==4) {
         procurarLivroPorNumeroRegistro();
-    } else if (op==5) {
+    } else if (op==0) {
         return;
     }else {
         escreverOpcaoInvalida();
@@ -395,56 +393,54 @@ void removerLivroDaListaDeCadastro(){
         anterior->proximo = ponteiro_lista->proximo;//faz o anterior apontar para o proximo elemento do que foi removido
         ponteiro_lista->proximo = NULL;
     }
-    //free(ponteiro_lista);
     return;
 }
 
 void mudarConfiguracoesDeCor() {
     int op=0;
-    while (op != 7) {
-        system("cls");
-        printf("*===================================*\n");
-        printf("*Escolha a cor da letra/Fundo de tela\n");
-        printf("*===================================*\n\n");
-        printf("* \t1 - Cinza/Azul.\n");
-        printf("* \t2 - Azul/Verde Agua.\n");
-        printf("* \t3 - Marrom/Azul.\n");
-        printf("* \t4 - Cinza/Vermelho.\n");
-        printf("* \t5 - Azul/Lilas.\n");
-        printf("* \t6 - Verde/Mostarda.\n");
-        printf("* \t7 - Sair.\n\n");
-        printf("*===================================*\n");
-        printf("\n\nEscolha uma opcao: ");
-        scanf("%d",&op);
-        printf("\n\n");
-        switch (op)
-        {
-        case 1:
-            system("COLOR 17");
-            break;
-        case 2:
-            system("COLOR 39");
-            break;
-        case 3:
-            system("COLOR 34");
-            break;
-        case 4:
-            system("COLOR 47");
-            break;
-        case 5:
-            system("COLOR 53");
-            break;
-        case 6:
-            system("COLOR 62");
-            break;
-        case 7:
-            break;
-        default :
-            escreverOpcaoInvalida();
-            break;
-        }
+    system("cls");
+    printf("*===================================*\n");
+    printf("*Escolha a cor da letra/Fundo de tela\n");
+    printf("*===================================*\n\n");
+    printf("* \t1 - Cinza/Azul.\n");
+    printf("* \t2 - Azul/Verde Agua.\n");
+    printf("* \t3 - Marrom/Azul.\n");
+    printf("* \t4 - Cinza/Vermelho.\n");
+    printf("* \t5 - Azul/Lilas.\n");
+    printf("* \t6 - Verde/Mostarda.\n");
+    printf("* \t0 - Sair.\n\n");
+    printf("*===================================*\n");
+    printf("\n\nEscolha uma opcao: ");
+    scanf("%d",&op);
+    printf("\n\n");
+    switch (op)
+    {
+    case 1:
+        system("COLOR 17");
+        break;
+    case 2:
+        system("COLOR 39");
+        break;
+    case 3:
+        system("COLOR 34");
+        break;
+    case 4:
+        system("COLOR 47");
+        break;
+    case 5:
+        system("COLOR 53");
+        break;
+    case 6:
+        system("COLOR 62");
+        break;
+    case 0:
+        return;//volta menu principal
+        break;
+    default :
+        escreverOpcaoInvalida();
+        break;
     }
-    return;
+    return mudarConfiguracoesDeCor();
 }
 
 void verificaSeListaDeLivrosEstaVazia() {
@@ -523,7 +519,7 @@ void menuPrincipal() {
         escreverOpcaoInvalida();
         break;
     }
-    menuPrincipal();
+    return menuPrincipal();
 }
 int main(){
     int semente;
