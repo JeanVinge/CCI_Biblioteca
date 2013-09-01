@@ -7,7 +7,8 @@ enum TIPO_PESQUISA_LIVRO
 {
     titulo,
     assunto,
-    autor
+    autor,
+    numeroRegistro
 };
 
 struct livros
@@ -146,21 +147,29 @@ void buscarLivrosPor(enum TIPO_PESQUISA_LIVRO tipoPesquisa, char busca[30]){
     while (percorre!=NULL) {
         escreverValor = false;
         if(tipoPesquisa == titulo){
-             if (strcmp(percorre->titulo, busca) ==0) {
+             if (strcmp(percorre->titulo, busca) == 0) {
                 achado = percorre;
                 escreverValor=true;
             }
         } else if (tipoPesquisa == autor) {
-            if (strcmp(percorre->autor, busca) ==0) {
+            if (strcmp(percorre->autor, busca) == 0) {
                 achado = percorre;
                 escreverValor=true;
             }
         } else if (tipoPesquisa == assunto) {
-            if (strcmp(percorre->assunto, busca) ==0) {
+            if (strcmp(percorre->assunto, busca) == 0) {
+                achado = percorre;
+                escreverValor=true;
+            }
+        } else if(tipoPesquisa == numeroRegistro){
+            char bla[30];
+            sprintf(bla,"%d",percorre->numRegistro);
+            if (strcmp(bla,busca) == 0){
                 achado = percorre;
                 escreverValor=true;
             }
         }
+
         if(escreverValor == true){
             escreverRegistroEncontrado();
             exibirInformacoesDoLivro(achado);
@@ -214,6 +223,14 @@ void procurarLivroPorAssunto(){
     buscarLivrosPor(tipo,busca);
 }
 
+void procurarLivroPorNumeroRegistro(){
+    char busca[30];
+    printf("Digite o numero de registro do livro a ser procurado: ");
+    scanf("%s",busca);
+    enum TIPO_PESQUISA_LIVRO tipo = numeroRegistro;
+    buscarLivrosPor(tipo,busca);
+}
+
 void listarLivrosCadastrados() {
     system("cls");
     printf("*====================================\n");
@@ -245,7 +262,8 @@ int escreverMenuComOpcoesParaBuscaDeLivros(){
     printf("* \t1 - Titulo.\n");
     printf("* \t2 - Autor.\n");
     printf("* \t3 - Assunto.\n");
-    printf("* \t4 - Sair.\n");
+    printf("* \t4 - Numero Registro.\n");
+    printf("* \t5 - Sair.\n");
     printf("=====================================\n\n");
     printf("Escolha uma opcao: ");
     scanf("%d", &opcao);
@@ -264,7 +282,11 @@ void menuBuscar() {
         procurarLivroPorAutor();
     } else if (op==3) {
         procurarLivroPorAssunto();
-    } else {
+    } else if (op==4) {
+        procurarLivroPorNumeroRegistro();
+    } else if (op==5) {
+        return;
+    }else {
         escreverOpcaoInvalida();
         return;
     }
