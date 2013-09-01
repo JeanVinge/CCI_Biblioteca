@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
+#include <stdbool.h>
 
 struct livros
 {
@@ -11,6 +11,7 @@ struct livros
     int numRegistro;
     struct livros *proximo;
 };
+
 struct livros *principal=NULL;
 
 struct auditoria
@@ -23,6 +24,93 @@ struct auditoria
 };
 struct auditoria *log=NULL;
 
+void escreverFinalDaOperacaoApertarEnterSair(){
+    printf("=====================================\n\n");
+    system("pause");
+    printf("Aperte enter para sair.......\n\n");
+}
+
+void enviarMensagemRegistroNaoEncontrado(){
+    printf("\nRegistro não foi encontrado.\n");
+    escreverFinalDaOperacaoApertarEnterSair();
+}
+
+struct livros * buscarLivroPorTitulo(char titulo[30]){
+    struct livros *percorre;
+    percorre=principal;
+    while (percorre!=NULL) {
+        if (strcmp(percorre->titulo, titulo) ==0) {
+            return percorre;
+        } else {
+            percorre=percorre->proximo;
+        }
+    }
+    printf("\nO Livro %s não foi encontrado.\n", titulo);
+    system("pause");
+    return NULL;
+}
+
+struct livros * buscarUltimoLivroDaListaPrincipal(){
+    struct livros *percorre;
+    percorre=principal;
+    while(percorre->proximo!=NULL){
+        percorre=percorre->proximo;
+    }
+    return percorre;
+}
+
+void insereRegistroNaLista(struct livros *novo){
+    struct livros *percorre;
+    if(principal==NULL) {
+        principal=novo;
+    } else {
+        percorre= buscarUltimoLivroDaListaPrincipal();
+        percorre->proximo=novo;
+    }
+    return;
+}
+
+void exibirInformacoesDoLivro(struct livros * livro){
+    printf("* \tNumero do Registro: %d\n",livro->numRegistro);
+    printf("* \tTitulo: %s\n",livro->titulo);
+    printf("* \tAutor: %s\n",livro->autor);
+    printf("* \tAssunto: %s\n",livro->assunto);
+}
+
+void escreverRegistroEncontrado(){
+    printf("=====================================\n");
+    printf("*Registro encontrado! \n");
+    printf("=====================================\n");
+}
+
+void buscarListaLivroPorTitulo(char titulo[30]){
+    struct livros *percorre;
+    percorre=principal;
+    bool achou = false;
+    system("cls");
+    while (percorre!=NULL) {
+        if (strcmp(percorre->titulo, titulo) ==0) {
+            escreverRegistroEncontrado();
+            exibirInformacoesDoLivro(percorre);
+            achou=true;
+        }
+        percorre=percorre->proximo;
+    }
+    if(achou == false) {
+        printf("\nO Livro %s não foi encontrado.\n", titulo);
+    }
+    system("pause");
+    return;
+}
+
+void procurarLivroPorTituloMandandoMensagem(){
+    char busca[30];
+    struct livros *percorre;
+    printf("Digite o titulo do livro a ser procurado: ");
+    scanf("%s",busca);
+    buscarListaLivroPorTitulo(busca);
+}
+
 void listar()
 {
     system("cls");
@@ -34,10 +122,7 @@ void listar()
     while (percorre!=NULL)
     {
         printf("=====================================\n");
-        printf("Numero do Registro: %d\n",percorre->numRegistro);
-        printf("Titulo: %s\n",percorre->titulo);
-        printf("Autor: %s\n",percorre->autor);
-        printf("Assunto: %s\n",percorre->assunto);
+        exibirInformacoesDoLivro(percorre);
         printf("=====================================\n\n");
         percorre=percorre->proximo;
     }
@@ -45,6 +130,7 @@ void listar()
     printf("Aperte enter para sair.......\n\n");
     return;
 }
+
 
 void buscar()
 {
@@ -65,37 +151,8 @@ void buscar()
     scanf("%d", &op);
     system("cls");
 
-    if (op==1)
-    {
-        printf("Digite o titulo do livro a ser procurado: ");
-        scanf("%s",busca);
-        while (percorre!=NULL)
-        {
-            if (strcmp(percorre->assunto, busca) ==0)
-            {
-                system("cls");
-                printf("=====================================\n");
-                printf("*Registro encontrado! \n");
-                printf("=====================================\n");
-                printf("* \tNumero do Registro: %d\n",percorre->numRegistro);
-                printf("* \tTitulo: %s\n",percorre->titulo);
-                printf("* \tAutor: %s\n",percorre->autor);
-                printf("* \tAssunto: %s\n",percorre->assunto);
-                printf("=====================================\n\n");
-                check++;
-                percorre=NULL;
-                system("pause");
-                printf("Aperte enter para sair.......\n\n");
-            }
-            else
-            {
-                percorre=percorre->proximo;
-            }
-        }
-        if (check==0)
-        {
-            printf("\nRegistro não foi encontrado.\n");
-        }
+    if (op==1) {
+        procurarLivroPorTituloMandandoMensagem();
     }
 
     if (op==2)
@@ -172,27 +229,6 @@ void buscar()
     return 0;
 }
 
-struct livros * buscarUltimoLivroDaListaPrincipal(){
-    struct livros *percorre;
-    percorre=principal;
-    while(percorre->proximo!=NULL){
-        percorre=percorre->proximo;
-    }
-    return percorre;
-}
-
-void insereRegistroNaLista(struct livros *novo){
-    struct livros *percorre;
-    if(principal==NULL) {
-        principal=novo;
-    } else {
-        percorre= buscarUltimoLivroDaListaPrincipal();
-        percorre->proximo=novo;
-    }
-    return;
-}
-
-
 void inserir()
 {
     system("cls");
@@ -230,52 +266,37 @@ void altera()
     printf("Digite o titulo do livro a ser Alterado: ");
     scanf("%s",tituloLivro);
 
-    while (percorre!=NULL)
-    {
-        if (strcmp(percorre->titulo, tituloLivro) ==0)
-        {
-            system("cls");
-            printf("=====================================\n");
-            printf("* Livro Encontrado\n");
-            printf("=====================================\n\n");
-            printf("Numero do Registro: %d\n",percorre->numRegistro);
-            printf("Titulo: %s\n",percorre->titulo);
-            printf("Autor: %s\n",percorre->autor);
-            printf("Assunto: %s\n\n",percorre->assunto);
-            printf("=====================================\n\n");
-            printf("* Voce Deseja Alterar? <1 - Titulo, 2 - Autor, 3 - Assunto> : ");
-            scanf("%d", &altera);
-            if (altera==1)
-            {
-                printf("Novo titulo :");
-                scanf("%s", percorre->titulo);
-            }
-            if (altera==2)
-            {
-                printf("Novo autor :");
-                scanf("%s", percorre->autor);
-            }
-            if (altera==3)
-            {
-                printf("Novo assunto :");
-                scanf("%s", percorre->assunto);
-            }
+    percorre = buscarLivroPorTitulo(tituloLivro);
 
-            system("pause");
-            printf("Itens atualizados, aperte enter para sair....");
-            check++;
-            percorre=NULL;
-        }
-        else
+    if(percorre != NULL) {
+        system("cls");
+        escreverRegistroEncontrado();
+        exibirInformacoesDoLivro(percorre);
+        printf("=====================================\n\n");
+
+        printf("* Voce Deseja Alterar?  1 - Titulo, 2 - Autor, 3 - Assunto : ");
+        scanf("%d", &altera);
+        if (altera==1)
         {
-            percorre=percorre->proximo;
+            printf("Novo titulo :");
+            scanf("%s", percorre->titulo);
         }
+        if (altera==2)
+        {
+            printf("Novo autor :");
+            scanf("%s", percorre->autor);
+        }
+        if (altera==3)
+        {
+            printf("Novo assunto :");
+            scanf("%s", percorre->assunto);
+        }
+
+        system("pause");
+        printf("Itens atualizados, aperte enter para sair....");
     }
-    if (check==0)
-    {
-        printf("\nO Livro %s não foi encontrado.\n", tituloLivro);
-    }
-    return;
+
+    return 0;
 }
 
 void retira ()
@@ -376,11 +397,8 @@ void mudarCor()
     return 0;
 }
 
-void verificaLista()
-{
-    //não funciona
-       if(principal== NULL)
-    {
+void verificaLista() {
+    if (principal == NULL) {
         printf("Lista vazia, insira um registro.");
         return 0;
     }
