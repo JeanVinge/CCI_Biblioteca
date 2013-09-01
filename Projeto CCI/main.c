@@ -485,7 +485,7 @@ void menuPrincipal() {
     printf("* \t5 - Remover Livro.\n");
     printf("* \t6 - Mudar cor.\n");
     printf("* \t7 - Lixeira.\n");
-    printf("* \t8 - Sair.\n\n");
+    printf("* \t0 - Sair.\n\n");
     printf("*===================================*\n");
     printf("\n\nEscolha uma opcao: ");
     scanf("%d",&opcao);
@@ -516,7 +516,7 @@ void menuPrincipal() {
     case 7:
         exibirDadosDosLivrosExcluidos();
         break;
-    case 8:
+    case 0:
         return;
         break;
     default :
