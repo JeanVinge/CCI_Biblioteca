@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-enum TIPO_PESQUISA_LIVRO            /* Defines an enumeration type    */
+enum TIPO_PESQUISA_LIVRO
 {
     titulo,
     assunto,
@@ -40,21 +40,6 @@ void escreverFinalDaOperacaoApertarEnterSair(){
 void enviarMensagemRegistroNaoEncontrado(){
     printf("\nRegistro não foi encontrado.\n");
     escreverFinalDaOperacaoApertarEnterSair();
-}
-
-struct livros * buscarLivroPorTitulo(char titulo[30]){
-    struct livros *percorre;
-    percorre=principal;
-    while (percorre!=NULL) {
-        if (strcmp(percorre->titulo, titulo) ==0) {
-            return percorre;
-        } else {
-            percorre=percorre->proximo;
-        }
-    }
-    printf("\nO Livro %s não foi encontrado.\n", titulo);
-    system("pause");
-    return NULL;
 }
 
 struct livros * buscarUltimoLivroDaListaPrincipal(){
@@ -128,6 +113,21 @@ void buscarListaLivroPor(enum TIPO_PESQUISA_LIVRO tipoPesquisa, char busca[30]){
     return;
 }
 
+struct livros * buscarLivroPorTitulo(char titulo[30]){
+    struct livros *percorre;
+    percorre=principal;
+    while (percorre!=NULL) {
+        if (strcmp(percorre->titulo, titulo) ==0) {
+            return percorre;
+        } else {
+            percorre=percorre->proximo;
+        }
+    }
+    printf("\nO Livro %s não foi encontrado.\n", titulo);
+    system("pause");
+    return NULL;
+}
+
 void procurarLivroPorTituloMandandoMensagem(){
     char busca[30];
     printf("Digite o titulo do livro a ser procurado: ");
@@ -170,6 +170,11 @@ void listar()
     return;
 }
 
+void escreverOpcaoInvalida() {
+    printf("Opcao invalida");
+    system("pause");
+}
+
 int escreverMenuParaBuscaDeLivros(){
     int opcao = 0;
     printf("=====================================\n");
@@ -199,6 +204,7 @@ void buscar()
     } else if (op==3) {
         procurarLivroPorAssuntoMandandoMensagem();
     } else {
+        escreverOpcaoInvalida();
         return 0;
     }
 
@@ -246,7 +252,6 @@ void altera()
     char tituloLivro[30];
     printf("Digite o titulo do livro a ser Alterado: ");
     scanf("%s",tituloLivro);
-
     percorre = buscarLivroPorTitulo(tituloLivro);
 
     if(percorre != NULL) {
@@ -257,26 +262,21 @@ void altera()
 
         printf("* Voce Deseja Alterar?  1 - Titulo, 2 - Autor, 3 - Assunto : ");
         scanf("%d", &altera);
-        if (altera==1)
-        {
+        if (altera==1) {
             printf("Novo titulo :");
             scanf("%s", percorre->titulo);
-        }
-        if (altera==2)
-        {
+        } else if (altera==2) {
             printf("Novo autor :");
             scanf("%s", percorre->autor);
-        }
-        if (altera==3)
-        {
+        } else if (altera==3) {
             printf("Novo assunto :");
             scanf("%s", percorre->assunto);
+        } else {
+            escreverOpcaoInvalida();
         }
 
-        system("pause");
-        printf("Itens atualizados, aperte enter para sair....");
+        escreverFinalDaOperacaoApertarEnterSair();
     }
-
     return 0;
 }
 
