@@ -44,15 +44,18 @@ void buscarLivrosPor(enum TIPO_PESQUISA_LIVRO tipoPesquisa, char busca[30]);
 void procurarLivrosPorTitulo();
 void procurarLivroPorAutor();
 void procurarLivroPorAssunto();
+void procurarLivroPorNumeroRegistro();
 void alterarDadosDoLivroPassandoTitulo();
 struct livros * buscarUltimoLivroDaListaPrincipal();
 struct livros * buscarUltimoLivroDaListaDeExcluidos();
 struct livros * buscarLivroPorTitulo(char titulo[30]);
+int pegarComprimentoDeUmaLista(struct livros *primeiroValorLista);
 
 
 
 struct livros *principal=NULL;
 struct livros *livros_excluidos=NULL;
+int TAMANHO_MAXIMO_LISTA_EXCLUIDOS = 5;
 
 void escreverFinalDaOperacaoApertarEnterSair(){
     printf("=====================================\n\n");
@@ -112,8 +115,20 @@ void insereRegistroNaListaPrincipalDeLivros(struct livros *novo){
     return;
 }
 
+int pegarComprimentoDeUmaLista(struct livros *primeiroValorLista){
+    if(primeiroValorLista==NULL) {
+        return 0;
+    } else {
+        return 1 + pegarComprimentoDeUmaLista(primeiroValorLista->proximo);
+    }
+}
+
 void insereRegistroNaListaDeLivrosExcluidos(struct livros *excluido){
     struct livros *percorre;
+    int tamanhoListaExcluidos = pegarComprimentoDeUmaLista(livros_excluidos);
+    if(tamanhoListaExcluidos >= TAMANHO_MAXIMO_LISTA_EXCLUIDOS){
+        livros_excluidos=livros_excluidos->proximo;//remove o primeiro elemento da lista, para depois adicionar no final
+    }
     if(livros_excluidos==NULL) {
         livros_excluidos=excluido;
     } else {
