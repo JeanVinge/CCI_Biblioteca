@@ -251,8 +251,7 @@ void listarLivrosCadastrados() {
     printf("*====================================\n\n");
     struct livros *percorre;
     percorre=principal;
-    while (percorre!=NULL)
-    {
+    while (percorre!=NULL) {
         printf("=====================================\n");
         exibirInformacoesDoLivro(percorre);
         printf("=====================================\n\n");
@@ -312,7 +311,6 @@ void deveInserirMaisRegistros(){
     char op1[2]="s";
 
     printf("Adicionar novo registro? <s/n> : ");
-    fflush(stdin);
     scanf("%s",op1);
     if(strcmp(op, op1) != 0){
         return inserirNovoLivro();
