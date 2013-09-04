@@ -64,7 +64,7 @@ void escreverFinalDaOperacaoApertarEnterSair(){
 }
 
 void enviarMensagemRegistroNaoEncontrado(){
-    printf("\nRegistro não foi encontrado.\n");
+    printf("\nRegistro nï¿½o foi encontrado.\n");
     escreverFinalDaOperacaoApertarEnterSair();
 }
 
@@ -191,7 +191,7 @@ void buscarLivrosPor(enum TIPO_PESQUISA_LIVRO tipoPesquisa, char busca[30]){
         percorre=percorre->proximo;
     }
     if(achou == false) {
-        printf("\nO Livro %s não foi encontrado.\n", busca);
+        printf("\nO Livro %s nï¿½o foi encontrado.\n", busca);
     }
     system("pause");
     return;
@@ -207,7 +207,7 @@ struct livros * buscarLivroPorTitulo(char titulo[30]){
             percorre=percorre->proximo;
         }
     }
-    printf("\nO Livro %s não foi encontrado.\n", titulo);
+    printf("\nO Livro %s nï¿½o foi encontrado.\n", titulo);
     system("pause");
     return NULL;
 }
@@ -398,8 +398,8 @@ void removerLivroDaListaDeCadastro(){
 
     if (anterior == NULL) {  //primeiro elemento da lista
         insereRegistroNaListaDeLivrosExcluidos(ponteiro_lista);
-        ponteiro_lista = ponteiro_lista->proximo;
-        principal = ponteiro_lista;
+        principal = ponteiro_lista->proximo;
+        ponteiro_lista->proximo=NULL;
         ponteiro_lista=NULL;
     } else {
         insereRegistroNaListaDeLivrosExcluidos(ponteiro_lista);
@@ -541,7 +541,7 @@ int main(){
         srand(semente);
         menuPrincipal();
     } else {
-        printf("Não eh um numero valido.\n");
+        printf("Nï¿½o eh um numero valido.\n");
     }
 
     return 0;
