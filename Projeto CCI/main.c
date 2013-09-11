@@ -2,7 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-
+/**
+* Danilo Pereira De Luca B168366
+* Jean Filipe Alves Vinge A8050F0
+* Trabalho da disciplina CCI, Prof: Lucia
+* 6 Semestre
+*/
 enum TIPO_PESQUISA_LIVRO{
     titulo,
     assunto,
@@ -262,7 +267,7 @@ void listarLivrosCadastrados() {
 }
 
 void escreverOpcaoInvalida() {
-    printf("Opcao invalida");
+    printf("Opcao invalida \n");
     system("pause");
 }
 
@@ -307,15 +312,20 @@ void menuBuscar() {
 }
 
 void deveInserirMaisRegistros(){
-    char op[2]="n";
-    char op1[2]="s";
+    char opNao[2]="n";
+    char opSim[2]="s";
+    char opDigitada[2]="";
 
     printf("Adicionar novo registro? <s/n> : ");
-    scanf("%s",op1);
-    if(strcmp(op, op1) != 0){
+    fflush(stdin);
+    scanf("%s",opDigitada);
+    if(strcmp(opDigitada, opSim) == 0){
         return inserirNovoLivro();
-    } else {
+    } else if(strcmp(opDigitada, opNao) == 0) {
         return;
+    } else {
+        escreverOpcaoInvalida();
+        return deveInserirMaisRegistros();
     }
 }
 
@@ -328,7 +338,7 @@ void inserirNovoLivro(){
     scanf("%s",novo->titulo);
     printf("Digite o Autor : ");
     scanf("%s",novo->autor);
-    printf("Digite o Assunto :");
+    printf("Digite o Assunto : ");
     scanf("%s",novo->assunto);
     printf("\n\n");
     novo->proximo=NULL;
@@ -541,7 +551,7 @@ int main(){
         srand(semente);
         menuPrincipal();
     } else {
-        printf("N�o eh um numero valido.\n");
+        printf("Nao eh um numero valido.\n");
     }
 
     return 0;
