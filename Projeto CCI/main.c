@@ -220,7 +220,8 @@ struct livros * buscarLivroPorTitulo(char titulo[30]){
 void procurarLivrosPorTitulo(){
     char busca[30];
     printf("Digite o titulo do livro a ser procurado: ");
-    scanf("%s",busca);
+    fflush(stdin);
+	gets(busca);
     enum TIPO_PESQUISA_LIVRO tipo = titulo;
     buscarLivrosPor(tipo,busca);
 }
@@ -228,7 +229,8 @@ void procurarLivrosPorTitulo(){
 void procurarLivroPorAutor(){
     char busca[30];
     printf("Digite o autor do livro a ser procurado: ");
-    scanf("%s",busca);
+    fflush(stdin);
+	gets(busca);
     enum TIPO_PESQUISA_LIVRO tipo = autor;
     buscarLivrosPor(tipo,busca);
 }
@@ -236,7 +238,8 @@ void procurarLivroPorAutor(){
 void procurarLivroPorAssunto(){
     char busca[30];
     printf("Digite o assunto do livro a ser procurado: ");
-    scanf("%s",busca);
+    fflush(stdin);
+    gets(busca);
     enum TIPO_PESQUISA_LIVRO tipo = assunto;
     buscarLivrosPor(tipo,busca);
 }
@@ -244,7 +247,8 @@ void procurarLivroPorAssunto(){
 void procurarLivroPorNumeroRegistro(){
     char busca[30];
     printf("Digite o numero de registro do livro a ser procurado: ");
-    scanf("%s",busca);
+    fflush(stdin);
+	gets(busca);
     enum TIPO_PESQUISA_LIVRO tipo = numeroRegistro;
     buscarLivrosPor(tipo,busca);
 }
@@ -334,12 +338,13 @@ void inserirNovoLivro(){
     struct livros *novo;
     novo=malloc(sizeof(struct livros));
     novo->numRegistro = rand() % 999;
+    fflush(stdin);
     printf("Digite o titulo : ");
-    scanf("%s",novo->titulo);
+    gets(novo->titulo);
     printf("Digite o Autor : ");
-    scanf("%s",novo->autor);
+    gets(novo->autor);
     printf("Digite o Assunto : ");
-    scanf("%s",novo->assunto);
+    gets(novo->assunto);
     printf("\n\n");
     novo->proximo=NULL;
     inserirNovoLivroOrdenando(novo);
@@ -356,7 +361,8 @@ void alterarDadosDoLivroPassandoTitulo() {
     char tituloLivro[30];
 
     printf("Digite o titulo do livro a ser Alterado: ");
-    scanf("%s",tituloLivro);
+    fflush(stdin);
+    gets(tituloLivro);
     percorre = buscarLivroPorTitulo(tituloLivro);
 
     if(percorre != NULL) {
@@ -366,16 +372,19 @@ void alterarDadosDoLivroPassandoTitulo() {
         printf("=====================================\n\n");
 
         printf("* Voce Deseja Alterar?  1 - Titulo, 2 - Autor, 3 - Assunto : ");
-        scanf("%d", &alterarDadosDoLivroPassandoTitulo);
+        gets(&alterarDadosDoLivroPassandoTitulo);
         if (alterarDadosDoLivroPassandoTitulo==1) {
             printf("Novo titulo :");
-            scanf("%s", percorre->titulo);
+			fflush(stdin);
+            gets(percorre->titulo);
         } else if (alterarDadosDoLivroPassandoTitulo==2) {
             printf("Novo autor :");
-            scanf("%s", percorre->autor);
+			fflush(stdin);
+            gets(percorre->autor);
         } else if (alterarDadosDoLivroPassandoTitulo==3) {
             printf("Novo assunto :");
-            scanf("%s", percorre->assunto);
+			fflush(stdin);
+            gets(percorre->assunto);
         } else {
             escreverOpcaoInvalida();
         }
@@ -394,7 +403,8 @@ void removerLivroDaListaDeCadastro(){
     ponteiro_lista = principal;
 
     printf("Insira o titulo do livro a ser removido :");
-    scanf("%s",nome_livro);
+    fflush(stdin);
+	gets(nome_livro);
 
     while (ponteiro_lista != NULL && (strcmp(ponteiro_lista->titulo, nome_livro) != 0) ) {
         anterior = ponteiro_lista;
