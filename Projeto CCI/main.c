@@ -196,7 +196,7 @@ void buscarLivrosPor(enum TIPO_PESQUISA_LIVRO tipoPesquisa, char busca[30]){
         percorre=percorre->proximo;
     }
     if(achou == false) {
-        printf("\nO Livro %s n�o foi encontrado.\n", busca);
+        printf("\nO Livro %s nao foi encontrado.\n", busca);
     }
     system("pause");
     return;
@@ -212,7 +212,7 @@ struct livros * buscarLivroPorTitulo(char titulo[30]){
             percorre=percorre->proximo;
         }
     }
-    printf("\nO Livro %s n�o foi encontrado.\n", titulo);
+    printf("\nO Livro %s nao foi encontrado.\n", titulo);
     system("pause");
     return NULL;
 }
@@ -372,7 +372,7 @@ void alterarDadosDoLivroPassandoTitulo() {
         printf("=====================================\n\n");
 
         printf("* Voce Deseja Alterar?  1 - Titulo, 2 - Autor, 3 - Assunto : ");
-        gets(&alterarDadosDoLivroPassandoTitulo);
+        scanf("%d", &alterarDadosDoLivroPassandoTitulo);
         if (alterarDadosDoLivroPassandoTitulo==1) {
             printf("Novo titulo :");
 			fflush(stdin);
@@ -561,7 +561,7 @@ int main(){
         srand(semente);
         menuPrincipal();
     } else {
-        printf("Nao eh um numero valido.\n");
+        printf("Numero invalido.\n");
     }
 
     return 0;
